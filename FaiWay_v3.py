@@ -12,6 +12,9 @@ CHAT_ID = 428276584
 
 url = 'https://fairway.moscow/experts/guzairova-natalya-petrovna'
 
+# переменная состояния бота
+is_running = False
+
 # создаем пустой список для уникальных дат
 dates = []
 
@@ -21,27 +24,32 @@ bot = Bot(token=BOT_TOKEN, loop=loop)
 dp = Dispatcher(bot)
 
 # обработчик команды /start
+
+
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.answer('Бот запущен и будет проверять расписание каждые 30 минут.')
+    if is_running is True:
+        await message.answer('Бот уже запущен.')
+        return
+
+    if is_running is False:
+        await message.answer('Бот запущен и будет проверять расписание каждые 30 минут.')
+        is_running = True
+
     # добавляем задание в очередь на выполнение функции check_schedule
     while True:
         await check_schedule()
         await t.sleep(1800)
 
+
 @dp.message_handler(commands=['stop'])
 async def stop_command(message: types.Message):
     """Обработчик команды /stop."""
-    # Отменяем задание check_schedule, если оно выполняется
-    for task in asyncio.all_tasks():
-        if task.get_name() == 'check_schedule':
-            task.cancel()
-    # Запускаем send_response() в отдельной задаче
-    asyncio.create_task(send_response(message))
+    if is_running is False:
+        await message.answer('Бот уже остановлен.')
 
-async def send_response(message: types.Message):
-    """Отправляет ответное сообщение."""
-    await message.answer('Бот остановлен.', reply_markup=types.ReplyKeyboardRemove())
+    if is_running is True:
+        await message.answer('Бот остановлен.')
 
 
 # функция для проверки расписания
@@ -57,7 +65,8 @@ async def check_schedule():
             # преобразуем строку в объект datetime
             time = datetime.strptime(day.text, '%H:%M')
             # создаем объект datetime с текущей датой и временем из расписания
-            now = datetime.now().replace(hour=time.hour, minute=time.minute, second=0, microsecond=0)
+            now = datetime.now().replace(
+                hour=time.hour, minute=time.minute, second=0, microsecond=0)
             # преобразуем объект datetime в нужный формат
             formatted_date = now.strftime('%Y-%m-%d %H:%M')
             # добавляем уникальные даты в список
@@ -67,7 +76,8 @@ async def check_schedule():
 
         # если есть новые даты, отправляем уведомление
         if new_dates:
-            message = 'Найдены новые даты в расписании: {}\nНовые даты:\n{}'.format(url, '\n'.join(new_dates))
+            message = 'Найдены новые даты в расписании: {}\nНовые даты:\n{}'.format(
+                url, '\n'.join(new_dates))
             await bot.send_message(chat_id=CHAT_ID, text=message)
 
 if __name__ == '__main__':
