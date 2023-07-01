@@ -27,7 +27,7 @@ while True:
         for day in day_schedule:
             # преобразуем строку в объект datetime
             time = datetime.strptime(day.text, '%H:%M')
-            # создаем о��ъект datetime с текущей датой и временем из расписания
+            # создаем объект datetime с текущей датой и временем из расписания
             now = f'{date} {time.hour}: {time.minute}'
             # преобразуем объект datetime в нужный формат
             formatted_date = now.strftime('%Y-%m-%d %H:%M')
@@ -38,7 +38,7 @@ while True:
 
         # если есть новые даты, отправляем уведомление
         if new_dates:
-            message = 'Найдены новые даты в расписании: {}\nНовые д��ты:\n{}'.format(url, '\n'.join(new_dates))
+            message = 'Найдены новые даты в расписании: {}\nНовые даты:\n{}'.format(url, '\n'.join(new_dates))
             telegram_api_url = 'https://api.telegram.org/bot{}/sendMessage'.format(BOT_TOKEN)
             data = {'chat_id': CHAT_ID, 'text': message}
             response = requests.post(telegram_api_url, data=data)
