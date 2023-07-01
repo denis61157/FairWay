@@ -29,8 +29,8 @@ while True:
             # добавляем уникальные даты в список
             key = f'{week_day} {formatted_date}'
             if key not in dates:
-                dates.append(formatted_date)
-                new_dates.append(formatted_date)
+                dates.append(key)
+                new_dates.append(key)
 
         # если есть новые даты, отправляем уведомление
         if new_dates:
