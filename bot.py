@@ -28,7 +28,7 @@ while True:
             week_day = calendar.day_name[datetime.strptime(formatted_date.split()[0], '%Y-%m-%d').weekday()]
             # добавляем уникальные даты в список
             key = f'{week_day} {formatted_date}'
-            if formatted_date not in dates:
+            if key not in dates:
                 dates.append(formatted_date)
                 new_dates.append(formatted_date)
 
