@@ -14,7 +14,6 @@ url = 'https://fairway.moscow/experts/verbitskaya-mariya'
 dates = []
 
 
-
 while True:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
