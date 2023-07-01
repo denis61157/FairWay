@@ -26,10 +26,8 @@ while True:
         for day in day_schedule:
             # преобразуем строку в объект datetime
             time = datetime.strptime(day.text, '%H:%M')
-            # создаем объект datetime с текущей датой и временем из расписания
-            now = f'{date} {time.hour}: {time.minute}'
             # преобразуем объект datetime в нужный формат
-            formatted_date = now.strftime('%Y-%m-%d %H:%M')
+            formatted_date = f'{date} {time.hour}: {time.minute}'
             # добавляем уникальные даты в список
             if formatted_date not in dates:
                 dates.append(formatted_date)
