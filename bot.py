@@ -1,7 +1,9 @@
+import calendar
+from datetime import datetime
 import time as t
 import requests
+
 from bs4 import BeautifulSoup
-from datetime import datetime
 
 
 # данные для отправки уведомления в Telegram
@@ -13,22 +15,19 @@ url = 'https://fairway.moscow/experts/verbitskaya-mariya'
 # создаем пустой список для уникальных дат
 dates = []
 
-
 while True:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     day_schedule = soup.find_all(class_='time')
-    date = soup.find_all(class_='date uk-active')
 
     if day_schedule:
         new_dates = []
         for day in day_schedule:
-            # преобразуем строку в объект datetime
-            time = datetime.strptime(day.text, '%H:%M')
-            # преобразуем объект datetime в нужный формат
-            formatted_date = f'{date} {time.hour}: {time.minute}'
+            formatted_date = day.attrs['data-time']
+            week_day = calendar.day_name[datetime.strptime(formatted_date.split()[0], '%Y-%m-%d').weekday()]
             # добавляем уникальные даты в список
+            key = f'{week_day} {formatted_date}'
             if formatted_date not in dates:
                 dates.append(formatted_date)
                 new_dates.append(formatted_date)
@@ -41,4 +40,4 @@ while True:
             response = requests.post(telegram_api_url, data=data)
             print('Уведомление отправлено в Telegram:', response.json())
 
-    t.sleep(300) # ждем 5 минут перед следующей проверкой
+    t.sleep(300)  # ждем 5 минут перед следующей проверкой
