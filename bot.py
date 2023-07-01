@@ -20,6 +20,7 @@ while True:
     soup = BeautifulSoup(response.text, 'html.parser')
 
     day_schedule = soup.find_all(class_='time')
+    date = soup.find_all(class_='date uk-active')
 
     if day_schedule:
         new_dates = []
@@ -27,7 +28,7 @@ while True:
             # преобразуем строку в объект datetime
             time = datetime.strptime(day.text, '%H:%M')
             # создаем о��ъект datetime с текущей датой и временем из расписания
-            now = datetime.now().replace(hour=time.hour, minute=time.minute, second=0, microsecond=0)
+            now = f'{date} {time.hour}: {time.minute}'
             # преобразуем объект datetime в нужный формат
             formatted_date = now.strftime('%Y-%m-%d %H:%M')
             # добавляем уникальные даты в список
