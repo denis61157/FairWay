@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 # данные для отправки уведомления в Telegram
 BOT_TOKEN = '5837398774:AAH9gKiaTjB9h6V0jQdceuDvhJeKNOJKbOQ'
-CHAT_ID = '428276584'
+CHAT_ID = '1001962172474'
 
 url = 'https://fairway.moscow/experts/verbitskaya-mariya'
 
