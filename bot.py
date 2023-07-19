@@ -17,6 +17,7 @@ dates = []
 
 while True:
     print('running..')
+
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
