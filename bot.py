@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 BOT_TOKEN = '5837398774:AAH9gKiaTjB9h6V0jQdceuDvhJeKNOJKbOQ'
 CHAT_ID = '428276584'
 
-url = 'https://fairway.moscow/experts/verbiczkaya-mariya-stanislavovovna/'
+url = 'https://fairway.moscow/experts/rozina-alena-sergeevna/'
 
 # создаем пустой список для уникальных дат
 dates = []
