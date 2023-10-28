@@ -14,14 +14,14 @@ logger = logging.getLogger(__name__)
 BOT_TOKEN = '5837398774:AAH9gKiaTjB9h6V0jQdceuDvhJeKNOJKbOQ'
 CHAT_ID = '428276584'
 
-url = 'https://fairway.moscow/experts/guzairova-natalya-petrovna/'
+url = 'https://fairway.moscow/experts/verbiczkaya-mariya-stanislavovovna/'
 
 # создаем пустой список для уникальных дат
 dates = []
 
 while True:
-    logger.info('running..')
     response = requests.get(url)
+    logger.info(f'Made request to: {url}, code: {response.status_code}')
     soup = BeautifulSoup(response.text, 'html.parser')
 
     day_schedule = soup.find_all(class_='time')
