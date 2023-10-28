@@ -1,3 +1,5 @@
+import logging
+
 import calendar
 from datetime import datetime
 import time as t
@@ -5,6 +7,8 @@ import requests
 
 from bs4 import BeautifulSoup
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # данные для отправки уведомления в Telegram
 BOT_TOKEN = '5837398774:AAH9gKiaTjB9h6V0jQdceuDvhJeKNOJKbOQ'
@@ -16,7 +20,7 @@ url = 'https://fairway.moscow/experts/guzairova-natalya-petrovna/'
 dates = []
 
 while True:
-    print('running..')
+    logger.info('running..')
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -49,4 +53,4 @@ while True:
     while counter:
         t.sleep(60)
         counter -= 60
-        print(f"Next request after: {counter} sec")
+        logger.info(f"Next request after: {counter} sec")
