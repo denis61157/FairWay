@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 BOT_TOKEN = '5837398774:AAH9gKiaTjB9h6V0jQdceuDvhJeKNOJKbOQ'
 CHAT_ID = '428276584'
 
-url = 'https://fairway.moscow/experts/verbiczkaya-mariya-stanislavovovna/'
+url = 'https://fairway.moscow/experts/guzairova-natalya-petrovna/'
 
 # создаем пустой список для уникальных дат
 dates = []
@@ -45,4 +45,8 @@ while True:
             response = requests.post(telegram_api_url, data=data)
             print('Уведомление отправлено в Telegram:', response.json())
 
-    t.sleep(300)  # ждем 5 минут перед следующей проверкой
+    counter = 300
+    while counter:
+        t.sleep(60)
+        counter -= 60
+        print(f"Next request after: {counter} sec")
